@@ -6,7 +6,7 @@ var map
 let selectedDbFile
 const fileInput = document.getElementById('file');
 
-const worker = new Worker("/worker.sql-wasm.js");
+const worker = new Worker("./worker.sql-wasm.js");
 const allPaths = []
 worker.onmessage = () => {
     console.log("Database opened");
