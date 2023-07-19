@@ -1,0 +1,110 @@
+main {
+    width: 100%;
+    max-width: 900px;
+}
+
+:root {
+    font-size: 18px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #201a17;
+    color: #ece0da;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    padding: 1em;
+    font-family: sans-serif;
+}
+
+#map {
+    height: 800px;
+}
+
+a {
+    color: #ff8800;
+}
+
+input {
+    background: #ece0da;
+}
+
+.input.quality {
+    background: #5b412f;
+    color: #ffdcc4;
+    border: none;
+    font-size: inherit;
+    border-radius: .1em;
+}
+
+label.input.file {
+    margin: 1em 0;
+    cursor: pointer;
+    display: block
+}
+
+label.input.file button {
+    width: 100%;
+    background: transparent;
+    background: #5b412f;
+    border: none;
+    border-radius: 1.25em;
+    color: #ece0da;
+    color: #ffdcc4;
+    font-size: 1em;
+    padding: .5em;
+    pointer-events: none;
+}
+
+nav {
+    display: flex;
+    gap: .5em;
+    margin-bottom: 1em;
+}
+
+nav .option {
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #ece0da;
+    color: #ffdcc4;
+    font-size: 1em;
+    padding: .5em;
+}
+
+input {
+    accent-color: #ffb781;
+}
+
+input[value="map"][name="view"]:checked~.option.map {
+    border-bottom: #5b412f 3px solid;
+}
+
+input[value="stats"][name="view"]:checked~.option.stats {
+    border-bottom: #5b412f 3px solid;
+}
+
+article {
+    all: unset;
+    display: inline;
+}
+/* .track-hover {
+    position: fixed;
+    top:10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #201a17;
+    z-index: 100;
+    padding: 0.5em 1em;
+    border-top: #ff8800 1px solid;
+    color: #ff8800;
+} */

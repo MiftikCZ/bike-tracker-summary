@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Tracker Summary online app</title>
+    <meta name="description" content="Simple online tool for summarizing exa bike tracker sessions">
+    <meta name="author" content="MiftikCZ">
+    <meta name="keywords" content="exa bike tracker,bike tracker, mountain bike, summary,web app, miftikcz,online">
+
+    <script src='./worker.sql-wasm.js'></script>
+    <script src="simplify.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script src='leaflet.fullscreen/fullscreen.min.js'></script>
+        <link href='leaflet.fullscreen/fullscreen.css' rel='stylesheet' />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <header><h1>Exa Bike Tracker Summary</h1></header>
+        <p>Made by <a href="https://miftik.xyz">MiftikCZ</a>. <article>Simply summarize your cycling stats with this simple <a href="https://github.com/MiftikCZ/bike-tracker-summary">open source</a> online tool.</article><br>In your bike tracker app export "all the data" to a .db
+            file that you will select in the input bellow, thats all!</p>
+
+        <label>Set pixels off (more = faster render): <input type="number" class="input quality" name="quality"
+                id="quality" value="0.0002" step="0.0001"></label><br>
+
+        <label class="input opacity">Opacity: <input type="checkbox" id="opacity"></label><br>
+        <label class="input unique-color">Each path diffrent color: <input type="checkbox" id="unique-color"></label><br>
+        <label class="input file" for="file"><button>Choose a file</button></label>
+        <input hidden type="file" id="file" name="file" class="input file" accept=".db, .sqlite">
+
+        <nav>
+            <input hidden type="radio" name="view" value="map" id="view_sel_map" checked>
+            <input hidden type="radio" name="view" value="stats" id="view_sel_stats">
+            <label for="view_sel_map" class="option map focus">Map</label>
+            <label for="view_sel_stats" class="option stats">Stats</label>
+        </nav>
+
+
+        <div id="map"></div>
+        <div hidden id="stats">
+            Comming soon...
+        </div>
+    </main>
+    <!-- <div class="track-hover" id="track-hover"></div> -->
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
