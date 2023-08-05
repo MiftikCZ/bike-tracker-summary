@@ -34,7 +34,7 @@ input {
     background: #ece0da;
 }
 
-.input.quality {
+.input[type=number] {
     background: #5b412f;
     color: #ffdcc4;
     border: none;

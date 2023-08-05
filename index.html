@@ -11,18 +11,19 @@
 
     <script src='./worker.sql-wasm.js'></script>
     <script src="simplify.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.js"></script> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-heatmap@1.0.0/leaflet-heatmap.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
     <script src='leaflet.fullscreen/fullscreen.min.js'></script>
     <link href='leaflet.fullscreen/fullscreen.css' rel='stylesheet' />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script> -->
     <script
         src="https://cdn.jsdelivr.net/npm/react-leaflet-arrowheads@1.1.0/build/react-leaflet-arrowheads.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/overpass-api/1.0.1/overpass-api.min.js"></script> -->
-
 </head>
 
 <body>
@@ -39,10 +40,14 @@
         <label>Set pixels off (more = faster render): <input type="number" class="input quality" name="quality"
                 id="quality" value="0.0002" step="0.0001"></label><br>
 
-        <label class="input opacity">Opacity: <input type="checkbox" id="opacity"></label><br>
+
+        <label>Heatmap intensity (more = less detail): <input type="number" class="input hradius" name="hradius"
+            id="hradius" value="10" step="1"></label><br>
+
+        <label class="input heatmap">Show heatmap: <input type="checkbox" id="heatmap"></label><br>
+        <label class="input lines">Show Lines: <input type="checkbox" id="lines" checked></label><br>
+        <label class="input avgmark">Average point marker: <input type="checkbox" id="avgmark"></label><br>
         <label class="input arrows">Show arrows: <input type="checkbox" id="arrows"></label><br>
-        <label class="input unique-color">Each path diffrent color: <input type="checkbox"
-                id="unique-color"></label><br>
         <label class="input file" for="file"><button>Choose a file</button></label>
         <input hidden type="file" id="file" name="file" class="input file" accept=".db, .sqlite">
 

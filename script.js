@@ -49,6 +49,13 @@ worker.onmessage = () => {
             }
         }
 
+        if (event.data.id == "put-averange-marker" && document.getElementById("avgmark").checked) {
+            let [lat,lon] = event.data.results[0].values[0]
+            L.marker([lat,lon])
+            .addTo(map)
+            .bindPopup('Average point')
+        }
+
         if (event.data.id == "stats-getfastestsession-id") {
             let [sessionId, maxAvgSpeed] = event.data.results[0].values[0]
             console.log(sessionId, maxAvgSpeed)
@@ -102,6 +109,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+
 function onDoneStats() {
     worker.postMessage({
         id: `setstats-maxspeed`,
@@ -120,19 +128,60 @@ function onDoneStats() {
         action: "exec",
         sql: `SELECT sessionid, MAX(averageSpeed * 3.6) AS maxavgspeed FROM TrackingPoint`
     })
+    
+    worker.postMessage({
+        id: "put-averange-marker",
+        action: "exec",
+        sql: `SELECT AVG(latitude),AVG(longitude) FROM TrackingPoint`
+    })
 }
 
+function loadHeatmap(allPaths) {
+  const latlngs = allPaths.flatMap((path) => path.map(([lat, lng]) => L.latLng(lat, lng)));
+  let heatmapEl = document.getElementById("heatmap")
+  const radius = document.getElementById("hradius")
+    let options = {
+        blur: 15,
+        gradient: {
+          0.4: 'blue',
+          0.65: 'lime',
+          1: 'red',
+        },
+    }
+  const heatmapLayer = L.heatLayer(latlngs, {
+    radius:parseInt(radius.value),...options
+  });
+
+  if(heatmapEl.checked) heatmapLayer.addTo(map)
+
+  document.getElementById("hradius").onchange = () => {
+    heatmapLayer.setOptions({
+        radius:parseInt(radius.value),
+       ...options 
+    })
+  }
+
+  heatmapEl.onchange = () => {
+    let ch = heatmapEl.checked
+    if(ch) {
+        heatmapLayer.addTo(map)
+    } else {
+        heatmapLayer.removeFrom(map)
+    }
+  }
+}
 
 function onDone() {
     let quality = document.getElementById("quality").value
-    let uColor = document.getElementById("unique-color").checked
-    let opacity = document.getElementById("opacity").checked
+    // let uColor = document.getElementById("unique-color").checked
+    let uColor, opacity = false
+    // let opacity = document.getElementById("opacity").checked
     let arrows = document.getElementById("arrows").checked
-    const trackHoverEl = document.getElementById("track-hover")
+    let layers = L.layerGroup([])
     for (let i = 0; i < allPaths.length; i++) {
         let path = simplify(allPaths[i], quality, true)
         let j = i * 12
-        let color = uColor ? `hsl(${j},${j / 360 / 10 + 65}%,50%)` : "#ff8800"
+        let color = "#ff8800"
         let _opacity = opacity ? 0.5 : 1
         let polyline = L.polyline(path, { color, opacity: _opacity })
         if (arrows){
@@ -142,7 +191,8 @@ function onDone() {
             });}
         
         polyline = polyline
-            .addTo(map);
+
+        layers.addLayer(polyline)
 
         polyline.on('mouseover', () => {
             // trackHoverEl.innerText = i
@@ -158,46 +208,19 @@ function onDone() {
         })
     }
 
-    // for(let i=0;i<allPaths.length;i++) {
-    //     let coordinates = allPaths[i]
-    //     const terrainData = coordinates.map(async (coordinate, index) => {
-    //         const longitude = coordinate[0];
-    //         const latitude = coordinate[1];
-    //         const terrain = await getTerrainData(longitude, latitude);
+    const linesEl = document.getElementById("lines")
+    if(linesEl.checked) layers.addTo(map)
 
-    //         return {
-    //           elevation: terrain.elevation,
-    //           type: terrain.tags.get("landuse"),
-    //         };
-    //       });
+    linesEl.onchange = () => {
+      let ch = linesEl.checked
+      if(ch) {
+        layers.addTo(map)
+      } else {
+        layers.removeFrom(map)
+      }
+    }
 
-    //       const statistics = {
-    //         residential: 0,
-    //         water: 0,
-    //         forest: 0,
-    //         coastline: 0,
-    //         nature_reserve: 0,
-    //         unclassified: 0,
-    //       };
-
-    //       terrainData.forEach((terrain) => {
-    //         const type = terrain.type;
-
-    //         if (type === "residential") {
-    //           statistics.residential++;
-    //         } else if (type === "water") {
-    //           statistics.water++;
-    //         } else if (type === "forest") {
-    //           statistics.forest++;
-    //         } else if (type === "coastline") {
-    //           statistics.coastline++;
-    //         } else if (type === "nature_reserve") {
-    //           statistics.nature_reserve++;
-    //         } else if (type === "unclassified") {
-    //           statistics.unclassified++;
-    //         }
-    //       });
-    // }
+    loadHeatmap(allPaths)
 
     onDoneStats()
 }
