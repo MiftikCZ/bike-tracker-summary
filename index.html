@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <main>
+      <header>
+          <h1>Exa Bike Tracker Summary</h1>
+      </header>
+      <p>Made by <a href="https://miftik.xyz">MiftikCZ</a>.
+      <article>Simply summarize your cycling stats with this simple <a
+              href="https://github.com/MiftikCZ/bike-tracker-summary">open source</a> online tool.</article><br>In
+      your bike tracker app export "all the data" to a .db
+      file that you will select in the input bellow, thats all!</p>
+
+      <label>Set pixels off (more = faster render): <input type="number" class="input quality" name="quality"
+              id="quality" value="0.0002" step="0.0001"></label><br>
+
+
+      <label>Heatmap intensity (more = less detail): <input type="number" class="input hradius" name="hradius"
+          id="hradius" value="10" step="1"></label><br>
+
+      <label class="input heatmap">Show heatmap: <input type="checkbox" id="heatmap"></label><br>
+      <label class="input lines">Show Lines: <input type="checkbox" id="lines" checked></label><br>
+      <label class="input avgmark">Average point marker: <input type="checkbox" id="avgmark"></label><br>
+      <label class="input arrows">Show arrows: <input type="checkbox" id="arrows"></label><br>
+      <label class="input file" for="file"><button>Choose a file</button></label>
+      <input hidden type="file" id="file" name="file" class="input file" accept=".db, .sqlite">
+
+      <nav>
+          <input hidden type="radio" name="view" value="map" id="view_sel_map" checked>
+          <input hidden type="radio" name="view" value="stats" id="view_sel_stats">
+          <label for="view_sel_map" class="option map focus">Map</label>
+          <label for="view_sel_stats" class="option stats">Stats</label>
+      </nav>
+
+
+      <div id="map"></div>
+      <div hidden id="stats">
+          Comming soon...
+      </div>
+  </main>
+  <!-- <div class="track-hover" id="track-hover"></div> -->
+
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

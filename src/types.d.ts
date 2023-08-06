@@ -1,0 +1,1 @@
+type allPathsType = [[number,number][]][]
